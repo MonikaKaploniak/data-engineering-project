@@ -53,6 +53,6 @@ unit-test:
 
 ## Run the coverage check - we might not make use of this but leaving
 check-coverage:
-	$(call activate_venv, PYTHONPATH=${PYTHONPATH} pytest --cov=src test/)
+	$(call activate_venv, PYTHONPATH=${PYTHONPATH} pytest --cov=src tests/)
 
 run-all: install-requirements security-test run-black unit-test check-coverage
