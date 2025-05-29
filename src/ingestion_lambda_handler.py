@@ -64,3 +64,5 @@ def lambda_handler(event, context):
         if "conn" in locals():
             conn.close()
             # This means: If the variable conn exists in the current local scope (i.e., the connection was successfully created), then close it.
+
+# comment to initiate CI/CD
