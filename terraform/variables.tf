@@ -11,5 +11,5 @@ variable "ingestion_bucket_name" {
 variable "ingestion_lambda_name" {
   description = "The name of the ingestion Lambda function"
   type        = string
-  default     = "my_ingestion_lambda"
+  default     = "monika-test-ingestion-lambda"
 }
