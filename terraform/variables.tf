@@ -1,11 +1,11 @@
 variable "aws_region" {
-    description = "AWS region to deploy resources in"
-    type        = string
-    default = "eu-west-2"
+  description = "AWS region to deploy resources in"
+  type        = string
+  default     = "eu-west-2"
 }
 
 variable "ingestion_bucket_name" {
-    default = "my-ingestion-bucket-unique-name"
+  default = "my-ingestion-bucket-unique-name"
 }
 
 variable "ingestion_lambda_name" {

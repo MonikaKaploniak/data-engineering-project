@@ -1,7 +1,7 @@
 // IAM trust policy for EventBridge
 data "aws_iam_policy_document" "eventbridge_trust_policy" {
   statement {
-    effect = "Allow"
+    effect  = "Allow"
     actions = ["sts:AssumeRole"]
     principals {
       type        = "Service"

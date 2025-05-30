@@ -1,13 +1,13 @@
 # Define resource "aws_lambda_function"
 
 resource "aws_lambda_function" "ingestion_lambda" {
-  function_name = var.ingestion_lambda_name
-  s3_bucket     = var.ingestion_bucket_name  # e.g., "terrific-totes-code-bucket"
-  s3_key        = "lambda/ingestion/lambda.zip"     # e.g., "lambda/ingestion/lambda.zip"
-  handler       = "lambda_function.lambda_handler"
-  runtime       = "python3.12"
-  role          = aws_iam_role.lambda_role.arn
-  timeout       = 30
+  function_name    = var.ingestion_lambda_name
+  s3_bucket        = var.ingestion_bucket_name     # e.g., "terrific-totes-code-bucket"
+  s3_key           = "lambda/ingestion/lambda.zip" # e.g., "lambda/ingestion/lambda.zip"
+  handler          = "lambda_function.lambda_handler"
+  runtime          = "python3.12"
+  role             = aws_iam_role.lambda_role.arn
+  timeout          = 30
   source_code_hash = filebase64sha256("lambda.zip") # still needed locally for tracking changes
 }
 # This resource allows you to define and manage AWS Lambda functions using Terraform. It supports specifying various attributes such as:

@@ -23,8 +23,8 @@ resource "aws_iam_policy" "step_function_lambda_invoke_policy" {
     Version = "2012-10-17",
     Statement = [
       {
-        Effect = "Allow",
-        Action = ["lambda:InvokeFunction"],
+        Effect   = "Allow",
+        Action   = ["lambda:InvokeFunction"],
         Resource = "${aws_lambda_function.ingestion_lambda.arn}:*"
       }
     ]
