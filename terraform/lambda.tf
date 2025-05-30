@@ -8,7 +8,7 @@ resource "aws_lambda_function" "ingestion_lambda" {
   runtime          = "python3.12"
   role             = aws_iam_role.lambda_role.arn
   timeout          = 30
-  layers = [aws_lambda_layer_version.pg8000_layer.arn]
+  layers = [aws_lambda_layer_version.common_layer.arn]
 }
 # This resource allows you to define and manage AWS Lambda functions using Terraform. It supports specifying various attributes such as:
 
@@ -19,10 +19,10 @@ resource "aws_lambda_function" "ingestion_lambda" {
 # role: The Amazon Resource Name (ARN) of the IAM role that Lambda assumes when it executes your function.
 # source_code_hash: A base64-encoded SHA256 hash of the deployment package. Terraform uses this to determine when to update the function.
 
-resource "aws_lambda_layer_version" "pg8000_layer" {
-  layer_name          = "pg8000"
-  s3_bucket           = var.ingestion_bucket_name
-  s3_key              = "layers/pg8000_layer.zip"
+resource "aws_lambda_layer_version" "common_layer" {
+  filename         = "layer.zip"
+  layer_name       = "common-layer"
   compatible_runtimes = ["python3.12"]
-  description         = "pg8000 dependency layer"
+  s3_bucket        = var.ingestion_bucket_name
+  s3_key           = "lambda/layers/layer.zip"
 }
