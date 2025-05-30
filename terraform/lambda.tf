@@ -20,7 +20,6 @@ resource "aws_lambda_function" "ingestion_lambda" {
 # source_code_hash: A base64-encoded SHA256 hash of the deployment package. Terraform uses this to determine when to update the function.
 
 resource "aws_lambda_layer_version" "common_layer" {
-  filename         = "layer.zip"
   layer_name       = "common-layer"
   compatible_runtimes = ["python3.12"]
   s3_bucket        = var.ingestion_bucket_name
