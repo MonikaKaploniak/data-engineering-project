@@ -65,4 +65,14 @@ def lambda_handler(event, context):
             conn.close()
             # This means: If the variable conn exists in the current local scope (i.e., the connection was successfully created), then close it.
 
-# comment to initiate CI/CD
+# connected to the Totesys PostgreSQL database using credentials from environment variables, 
+# selected and extracted data from multiple tables, 
+# stored it in an S3 ingestion bucket as CSV files, and 
+# added logging to CloudWatch - Lambda function automatically adds logs to CloudWatch 
+# through the use of Python’s built-in logging module — and AWS handles the rest
+
+# Behind the scenes:
+# Every AWS Lambda function automatically sends all stdout and stderr output 
+# — including anything from print() or logging — to Amazon CloudWatch Logs.
+# When your function runs, AWS creates (or appends to) a log stream in 
+# a log group named /aws/lambda/<your-lambda-name>.
