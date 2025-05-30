@@ -8,6 +8,7 @@ resource "aws_lambda_function" "ingestion_lambda" {
   runtime          = "python3.12"
   role             = aws_iam_role.lambda_role.arn
   timeout          = 30
+  layers = [aws_lambda_layer_version.pg8000_layer.arn]
 }
 # This resource allows you to define and manage AWS Lambda functions using Terraform. It supports specifying various attributes such as:
 
