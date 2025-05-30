@@ -5,7 +5,7 @@ variable "aws_region" {
 }
 
 variable "ingestion_bucket_name" {
-    default = "terrific-ingestion-bucket-unique-name"
+    default = "my-ingestion-bucket-unique-name"
 }
 
 variable "ingestion_lambda_name" {
