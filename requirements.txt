@@ -6,4 +6,3 @@ fastapi
 pg8000
 pytest
 uvicorn
-pandas
