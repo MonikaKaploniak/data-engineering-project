@@ -17,3 +17,11 @@ resource "aws_lambda_function" "ingestion_lambda" {
 # runtime: The runtime environment for the Lambda function (e.g., python3.12).
 # role: The Amazon Resource Name (ARN) of the IAM role that Lambda assumes when it executes your function.
 # source_code_hash: A base64-encoded SHA256 hash of the deployment package. Terraform uses this to determine when to update the function.
+
+resource "aws_lambda_layer_version" "pg8000_layer" {
+  layer_name          = "pg8000"
+  s3_bucket           = var.ingestion_bucket_name
+  s3_key              = "layers/pg8000_layer.zip"
+  compatible_runtimes = ["python3.12"]
+  description         = "pg8000 dependency layer"
+}
