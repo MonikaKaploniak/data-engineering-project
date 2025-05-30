@@ -4,7 +4,7 @@ resource "aws_lambda_function" "ingestion_lambda" {
   function_name    = var.ingestion_lambda_name
   s3_bucket        = var.ingestion_bucket_name     # e.g., "terrific-totes-code-bucket"
   s3_key           = "lambda/ingestion/lambda.zip" # e.g., "lambda/ingestion/lambda.zip"
-  handler          = "ingestion.ingestion_lambda_handler.lambda_handler"
+  handler          = "src.ingestion.ingestion_lambda_handler.lambda_handler"
   runtime          = "python3.12"
   role             = aws_iam_role.lambda_role.arn
   timeout          = 30
