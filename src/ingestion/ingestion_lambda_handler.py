@@ -12,7 +12,7 @@ from datetime import datetime
 from dotenv import load_dotenv
 
 
-BUCKET = "totesys-ingestion-bucket"
+BUCKET = "my-ingestion-bucket-unique-name"
 # Initialize the S3 client outside of the handler
 s3_client = boto3.client('s3')
 
@@ -36,6 +36,7 @@ TABLES = ["counterparty", "currency", "department", "design", "staff", "sales_or
 def lambda_handler(event, context):
     timestamp = datetime.utcnow().strftime("%Y-%m-%d_%H-%M-%S") # formats it as a string like "2025-05-29-12-00-00"
     try:
+        print("Connecting to database...")
         conn = pg8000.native.Connection(
             # cohort_id=COHORT_ID,
             user=USER,
@@ -49,6 +50,7 @@ def lambda_handler(event, context):
             columns = [col['name'] for col in conn.columns]
             df = pd.DataFrame(rows, columns=columns)
 
+            print("Writing to S3...")
             s3_client.put_object(
                 Bucket=BUCKET,
                 Key=f"{timestamp}/{table}.csv",
