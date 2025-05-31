@@ -49,7 +49,7 @@ run-black:
 
 ## Run the unit tests
 unit-test:
-	$(call activate_venv, PYTHONPATH=$(shell pwd) pytest -vv)
+	$(call activate_venv, PYTHONPATH=${PYTHONPATH} pytest -vv)
 
 ## Run the coverage check - we might not make use of this but leaving
 check-coverage:
