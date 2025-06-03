@@ -33,9 +33,17 @@ resource "aws_iam_role" "lambda_role" {
 data "aws_iam_policy_document" "s3_data_policy_doc" {
   statement {
     # give permission to put objects in the data bucket
-    effect    = "Allow"
-    actions   = ["s3:PutObject"]
+    effect = "Allow"
+    actions = [
+      "s3:PutObject",
+      "s3:GetObject"
+    ]
     resources = ["${aws_s3_bucket.ingestion_bucket.arn}/*"]
+  }
+  statement {
+    effect    = "Allow"
+    actions   = ["s3:ListBucket"]
+    resources = ["${aws_s3_bucket.ingestion_bucket.arn}"]
   }
 }
 

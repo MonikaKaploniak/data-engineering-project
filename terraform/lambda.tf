@@ -38,3 +38,5 @@ resource "aws_lambda_layer_version" "common_layer" {
   s3_bucket           = var.ingestion_bucket_name
   s3_key              = "lambda/layers/layer.zip"
 }
+
+# just for change
