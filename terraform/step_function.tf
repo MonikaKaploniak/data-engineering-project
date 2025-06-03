@@ -53,3 +53,11 @@ resource "aws_sfn_state_machine" "step_function" {
     }
   })
 }
+
+resource "aws_lambda_permission" "allow_stepfunctions" {
+  statement_id  = "AllowStepFunctionsInvoke"
+  action        = "lambda:InvokeFunction"
+  function_name = aws_lambda_function.ingestion_lambda.function_name
+  principal     = "states.amazonaws.com"
+  source_arn    = aws_sfn_state_machine.step_function.arn
+}

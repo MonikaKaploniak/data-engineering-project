@@ -9,7 +9,7 @@ import os
 import pg8000.native
 import pandas as pd
 from datetime import datetime
-from dotenv import load_dotenv
+# from dotenv import load_dotenv
 
 
 BUCKET = "my-ingestion-bucket-unique-name"
@@ -21,7 +21,7 @@ logger = logging.getLogger()
 logger.setLevel("INFO")
 
 # Load environment variables
-load_dotenv()
+# load_dotenv()
 
 # ENV VARIABLES
 COHORT_ID = os.environ["TOTESYS_COHORT_ID"]

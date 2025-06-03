@@ -4,3 +4,4 @@ venv
 .env
 *.zip
 lambda.zip
+terraform.tfvars
