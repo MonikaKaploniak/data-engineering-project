@@ -14,7 +14,7 @@ from dotenv import load_dotenv
 
 from src.ingestion.check_for_new_data import look_for_totesys_updates
 
-BUCKET = "project-totesys-ingestion-bucket"
+BUCKET = "my-ingestion-bucket-unique-name"
 # Initialize the S3 client outside of the handler
 s3_client = boto3.client('s3')
 
@@ -50,18 +50,25 @@ def lambda_handler(event, context):
     """Looks in S3 ingest bucket for .txt file added after initial ingest, if no file exists, initial ingest is run"""
     try:
         ingest_marker = s3_client.get_object(
-                        Bucket="project-totesys-ingestion-bucket",
+                        Bucket=BUCKET,
                         Key='Initial_Ingest_Marker.txt'
                         )
     
         # scan ToteSys for new data and add to S3
         """If initial ingest has happened, data is scanned for updates or additions"""
         look_for_totesys_updates(conn, s3_client)
+        # Return success response here after updates are checked
+        return {
+            "statusCode": 200,
+            "body": "Checked for ToteSys updates and uploaded changes to S3"
+        }
 
     # no ingest marker
     except ClientError as e:
         if e.response['Error']['Code'] == "NoSuchKey":
             ingest_marker = False
+        else:
+            raise
     
     # If ToteSys hasn't been ingested, perform initial ingest
     if not ingest_marker:
@@ -80,14 +87,17 @@ def lambda_handler(event, context):
                     Body=df.to_csv(index=False)
                 )
 
-                s3_client.put_object(
-                    Bucket=BUCKET,
-                    Key=f"Initial_Ingest_Marker.txt",
-                    Body= f"Initial data ingest performed successfully at {timestamp}"
-                )
+            s3_client.put_object(
+                Bucket=BUCKET,
+                Key=f"Initial_Ingest_Marker.txt",
+                Body= f"Initial data ingest performed successfully at {timestamp}"
+            )
 
             logger.info("Successfully uploaded tables to the bucket")
-            return {"statusCode": 200, "body": f"Uploaded {len(TABLES)} tables to S3 {BUCKET}"}
+            return {
+                "statusCode": 200, 
+                "body": f"Uploaded {len(TABLES)} tables to S3 {BUCKET}"
+            }
     
         except Exception as e:
             logger.error(f"Error processing order: {str(e)}")
