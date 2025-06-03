@@ -29,3 +29,19 @@ resource "aws_cloudwatch_event_target" "target" {
   arn       = aws_sfn_state_machine.step_function.arn
   role_arn  = aws_iam_role.eventbridge_role.arn
 }
+
+resource "aws_iam_role_policy" "eventbridge_invoke_step_function_policy" {
+  name = "eventbridge_invoke_step_function_policy"
+  role = aws_iam_role.eventbridge_role.id
+
+  policy = jsonencode({
+    Version = "2012-10-17",
+    Statement = [
+      {
+        Effect = "Allow",
+        Action = ["states:StartExecution"],
+        Resource = aws_sfn_state_machine.step_function.arn
+      }
+    ]
+  })
+}
