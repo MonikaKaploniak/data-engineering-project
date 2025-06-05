@@ -8,6 +8,10 @@ variable "ingestion_bucket_name" {
   default = "my-ingestion-bucket-unique-name"
 }
 
+variable "processed_bucket_name" {
+  default = "my-processed-bucket-unique-name"
+}
+
 variable "ingestion_lambda_name" {
   description = "The name of the ingestion Lambda function"
   type        = string

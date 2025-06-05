@@ -25,7 +25,7 @@ resource "aws_iam_policy" "step_function_lambda_invoke_policy" {
       {
         Effect   = "Allow",
         Action   = ["lambda:InvokeFunction"],
-        Resource = "${aws_lambda_function.ingestion_lambda.arn}:*"
+        Resource = aws_lambda_function.ingestion_lambda.arn
       }
     ]
   })
@@ -39,23 +39,23 @@ resource "aws_iam_role_policy_attachment" "step_function_lambda_access" {
 
 // Step Function to orchestrate ingestion Lambda
 resource "aws_sfn_state_machine" "step_function" {
-  name     = "step-function"
+  name     = "monika-test-step-function"
   role_arn = aws_iam_role.step_function_role.arn
 
   definition = jsonencode({
-    StartAt = "CallLambda",
-    States = {
-      CallLambda = {
-        Type     = "Task",
-        Resource = "${aws_lambda_function.ingestion_lambda.arn}",
-        End      = true
+    "StartAt" : "CallLambda",
+    "States" : {
+      "CallLambda" : {
+        "Type" : "Task",
+        "Resource" : "${aws_lambda_function.ingestion_lambda.arn}",
+        "End" : true
       }
     }
   })
 }
 
-resource "aws_lambda_permission" "allow_stepfunctions" {
-  statement_id  = "AllowStepFunctionsInvoke"
+resource "aws_lambda_permission" "allow_step_function" {
+  statement_id  = "AllowExecutionFromStepFunction"
   action        = "lambda:InvokeFunction"
   function_name = aws_lambda_function.ingestion_lambda.function_name
   principal     = "states.amazonaws.com"

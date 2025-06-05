@@ -18,8 +18,8 @@ resource "aws_iam_role" "eventbridge_role" {
 
 // EventBridge rule to trigger every 30 minutes
 resource "aws_cloudwatch_event_rule" "eventbridge_rule" {
-  name                = "trigger-step-function-every-30-minutes"
-  schedule_expression = "rate(30 minutes)"
+  name                = "trigger-step-function-every-20-minutes"
+  schedule_expression = "rate(20 minutes)"
 }
 
 // EventBridge target that triggers the Step Function
@@ -35,11 +35,11 @@ resource "aws_iam_role_policy" "eventbridge_invoke_step_function_policy" {
   role = aws_iam_role.eventbridge_role.id
 
   policy = jsonencode({
-    Version = "2012-10-17",
+    Version = "2012-10-17"
     Statement = [
       {
-        Effect   = "Allow",
-        Action   = ["states:StartExecution"],
+        Effect   = "Allow"
+        Action   = "states:StartExecution"
         Resource = aws_sfn_state_machine.step_function.arn
       }
     ]
